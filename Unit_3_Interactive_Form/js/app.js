@@ -1,15 +1,41 @@
+//global variables
+const jobRole = $('#title');
+const colorOptions = $('#color').children();
+const designOptions = $('#design');
+
+
+//set focus on page load
 refreshFocus = () => {
     $('#name').focus();
     $('#other-title').hide()
 };
 refreshFocus();
 
-const jobRole = $('#title');
 
+//make other text box conditional
 jobRole.on('change', function (){
     if(jobRole.val() === 'other'){
         $('#other-title').show();
         }else {
         $('#other-title').hide()
 }
+});
+
+//add classes to color options based on index position
+colorOptions.each(function(index, element){
+if (index <= 2) {
+    $(this).addClass('JS_Pun_Colors');
+} else if(index >= 3){
+    $(this).addClass('Love_JS_Colors');
+}
+});
+
+designOptions.on('change', function (){
+ if (designOptions.val() ===  'js puns'){
+     $('.Love_JS_Colors').hide();
+     $('.JS_Pun_Colors').show();
+ } else if(designOptions.val() === 'heart js'){
+     $('.JS_Pun_Colors').hide();
+     $('.Love_JS_Colors').show();
+ }
 });
