@@ -2,12 +2,14 @@
 const jobRole = $('#title');
 const colorOptions = $('#color').children();
 const designOptions = $('#design');
+const activityCheckbox = $(':checkbox');
 
 
 //set focus on page load
 refreshFocus = () => {
     $('#name').focus();
     $('#other-title').hide()
+    $('#colors-js-puns').hide()
 };
 refreshFocus();
 
@@ -23,6 +25,7 @@ jobRole.on('change', function (){
 
 //add classes to color options based on index position
 colorOptions.each(function(index, element){
+    
 if (index <= 2) {
     $(this).addClass('JS_Pun_Colors');
 } else if(index >= 3){
@@ -32,6 +35,7 @@ if (index <= 2) {
 
 //change color options based on design selection
 designOptions.on('change', function (){
+    $('#colors-js-puns').show()
  if (designOptions.val() ===  'js puns'){
      $('#color').val('cornflowerblue');
      $('.Love_JS_Colors').hide();
@@ -42,3 +46,35 @@ designOptions.on('change', function (){
     $('.Love_JS_Colors').show();
  }
 });
+
+
+activityCheckbox.on('click', function () {
+    const clicked = $(event.target);
+    const clickedAttr = $(this).attr('name');
+
+    // if (clickedAttr === 'js-frameworks' && clicked.is(':checked')===true) {
+    //     $("[name='express']").attr('disabled', true);
+    // }
+
+    if (clicked.is(':checked')) {
+        switch (clickedAttr) {
+            case 'js-frameworks':
+            $("[name='express']").attr('disabled', true)
+                break;
+            case 'express':
+            $("[name='js-frameworks']").attr('disabled', true)
+                break;
+            case 'js-libs':
+            $("[name='node']").attr('disabled', true)
+                break;
+            case 'node':
+            $("[name='js-libs']").attr('disabled', true)
+                break;
+            default:
+                break;
+        }
+    }
+    
+})
+
+
