@@ -30,12 +30,15 @@ if (index <= 2) {
 }
 });
 
+//change color options based on design selection
 designOptions.on('change', function (){
  if (designOptions.val() ===  'js puns'){
+     $('#color').val('cornflowerblue');
      $('.Love_JS_Colors').hide();
      $('.JS_Pun_Colors').show();
  } else if(designOptions.val() === 'heart js'){
-     $('.JS_Pun_Colors').hide();
-     $('.Love_JS_Colors').show();
+    $('#color').val('tomato'); 
+    $('.JS_Pun_Colors').hide();
+    $('.Love_JS_Colors').show();
  }
 });
