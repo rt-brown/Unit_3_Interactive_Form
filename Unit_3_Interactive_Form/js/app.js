@@ -51,24 +51,45 @@ designOptions.on('change', function (){
 activityCheckbox.on('click', function () {
     const clicked = $(event.target);
     const clickedAttr = $(this).attr('name');
-
-    // if (clickedAttr === 'js-frameworks' && clicked.is(':checked')===true) {
-    //     $("[name='express']").attr('disabled', true);
-    // }
-
+    
+    
     if (clicked.is(':checked')) {
         switch (clickedAttr) {
             case 'js-frameworks':
             $("[name='express']").attr('disabled', true)
+            $("[name='express']").parent().wrap('<strike>')
                 break;
             case 'express':
             $("[name='js-frameworks']").attr('disabled', true)
+            $("[name='js-frameworks']").parent().wrap('<strike>')
                 break;
             case 'js-libs':
             $("[name='node']").attr('disabled', true)
+            $("[name='node']").parent().wrap('<strike>')
                 break;
             case 'node':
             $("[name='js-libs']").attr('disabled', true)
+            $("[name='js-libs']").parent().wrap('<strike>')
+                break;
+            default:
+                break;
+        }
+    }
+
+    if (clicked.prop('checked')===false) {
+        console.log('unchecked');
+        switch (clickedAttr) {
+            case 'js-frameworks':
+            $("[name='express']").attr('disabled', false)
+                break;
+            case 'express':
+            $("[name='js-frameworks']").attr('disabled', false)
+                break;
+            case 'js-libs':
+            $("[name='node']").attr('disabled', false)
+                break;
+            case 'node':
+            $("[name='js-libs']").attr('disabled', false)
                 break;
             default:
                 break;
@@ -77,4 +98,7 @@ activityCheckbox.on('click', function () {
     
 })
 
+// if (clickedAttr === 'js-frameworks' && clicked.is(':checked')===true) {
+    //     $("[name='express']").attr('disabled', true);
+    // }
 
