@@ -3,13 +3,15 @@ const jobRole = $('#title');
 const colorOptions = $('#color').children();
 const designOptions = $('#design');
 const activityCheckbox = $(':checkbox');
+let total = 0;
+
 
 
 //set focus on page load
 refreshFocus = () => {
     $('#name').focus();
     $('#other-title').hide()
-    $('#colors-js-puns').hide()
+    //$('#colors-js-puns').hide()
 };
 refreshFocus();
 
@@ -25,13 +27,16 @@ jobRole.on('change', function (){
 
 //add classes to color options based on index position
 colorOptions.each(function(index, element){
-    
 if (index <= 2) {
     $(this).addClass('JS_Pun_Colors');
 } else if(index >= 3){
     $(this).addClass('Love_JS_Colors');
 }
 });
+
+// if(designOptions.val() === 'Select Theme'){
+
+// };
 
 //change color options based on design selection
 designOptions.on('change', function (){
@@ -55,21 +60,42 @@ activityCheckbox.on('click', function () {
     
     if (clicked.is(':checked')) {
         switch (clickedAttr) {
+            case 'all':
+            total += 200
+            $("label:last-child").text('$' + total);
+                break;
             case 'js-frameworks':
             $("[name='express']").attr('disabled', true)
-            $("[name='express']").parent().wrap('<strike>')
+            $("[name='express']").parent().css({'color': 'maroon'})
+            total += 100
+            $("label:last-child").text('$' + total);
+            
                 break;
             case 'express':
             $("[name='js-frameworks']").attr('disabled', true)
-            $("[name='js-frameworks']").parent().wrap('<strike>')
+            $("[name='js-frameworks']").parent().css({'color': 'maroon'})
+            total += 100
+            $("label:last-child").text('$' + total);
                 break;
             case 'js-libs':
             $("[name='node']").attr('disabled', true)
-            $("[name='node']").parent().wrap('<strike>')
+            $("[name='node']").parent().css({'color': 'maroon'})
+            total += 100
+            $("label:last-child").text('$' + total);
                 break;
             case 'node':
             $("[name='js-libs']").attr('disabled', true)
-            $("[name='js-libs']").parent().wrap('<strike>')
+            $("[name='js-libs']").parent().css({'color': 'maroon'})
+            total += 100
+            $("label:last-child").text('$' + total);
+                break;
+            case 'build-tools':
+            total += 100
+            $("label:last-child").text('$' + total);
+                break;
+            case 'npm':
+            total += 100
+            $("label:last-child").text('$' + total);
                 break;
             default:
                 break;
@@ -77,28 +103,57 @@ activityCheckbox.on('click', function () {
     }
 
     if (clicked.prop('checked')===false) {
-        console.log('unchecked');
         switch (clickedAttr) {
+            case 'all':
+            total -= 200
+            $("label:last-child").text('$' + total);
+                break;
             case 'js-frameworks':
             $("[name='express']").attr('disabled', false)
+            $("[name='express']").parent().css({'color': 'black'})
+            total -= 100
+            $("label:last-child").text('$' + total);
                 break;
             case 'express':
             $("[name='js-frameworks']").attr('disabled', false)
+            $("[name='js-frameworks']").parent().css({'color': 'black'})
+            total -= 100
+            $("label:last-child").text('$' + total);
                 break;
             case 'js-libs':
             $("[name='node']").attr('disabled', false)
+            $("[name='node']").parent().css({'color': 'black'})
+            total -= 100
+            $("label:last-child").text('$' + total);
                 break;
             case 'node':
             $("[name='js-libs']").attr('disabled', false)
+            $("[name='js-libs']").parent().css({'color': 'black'})
+            total -= 100
+            $("label:last-child").text('$' + total);
+                break;
+            case 'build-tools':
+            total -= 100
+            $("label:last-child").text('$' + total);
+                break;
+            case 'npm':
+            total -= 100
+            $("label:last-child").text('$' + total);
                 break;
             default:
                 break;
+            
         }
     }
     
 })
 
-// if (clickedAttr === 'js-frameworks' && clicked.is(':checked')===true) {
-    //     $("[name='express']").attr('disabled', true);
-    // }
 
+function createTotal () {
+    const parentActivities = $('.activities');
+    parentActivities.append('<label>Total:</label>')
+    parentActivities.append('<label></label>')
+    
+};
+
+createTotal();
