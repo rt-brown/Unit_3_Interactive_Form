@@ -4,11 +4,11 @@ const colorOptions = $('#color').children();
 const designOptions = $('#design');
 const activityCheckbox = $(':checkbox');
 let total = 0;
-const paymentOptions = $('#payment');
+const paymentOptions = $('#payment').children();
 const creditCardinfo = $('#credit-card');
-const paymentInfo = $('fieldset').eq(3);
-const payPaltext = $('#paypal');
-const bitCointext = $('#bitcoin');
+const paymentSelection = $('#payment');
+const payPaltext = $('#payment').next().next();
+const bitCointext = payPaltext.next();
 
 
 
@@ -180,14 +180,21 @@ createTotal();
 //working on payment section
 
 paymentOptions.eq(1).attr('selected', true);
-paymentInfo.addClass('payment');
-$('.payment div').eq(4).attr('id', 'paypal');
-$('.payment div').eq(5).attr('id', 'bitcoin');
+payPaltext.hide();
+bitCointext.hide();
 
-paymentOptions.on('change', function () {
-    if (paymentOptions.val() === 'credit card') {
-        // $('#paypal').hide();
-        // $('#bitcoin').hide();
-
+paymentSelection.on('change', function () {
+    if (paymentSelection.val() === 'credit card') {
+        payPaltext.hide();
+        bitCointext.hide();
+        creditCardinfo.show();
+    } else if (paymentSelection.val() === 'paypal') {
+        creditCardinfo.hide();
+        bitCointext.hide();
+        payPaltext.show();
+        } else if (paymentSelection.val() === 'bitcoin'){
+        creditCardinfo.hide();
+        payPaltext.hide();
+        bitCointext.show();
     }
 });
