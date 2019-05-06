@@ -4,6 +4,11 @@ const colorOptions = $('#color').children();
 const designOptions = $('#design');
 const activityCheckbox = $(':checkbox');
 let total = 0;
+const paymentOptions = $('#payment');
+const creditCardinfo = $('#credit-card');
+const paymentInfo = $('fieldset').eq(3);
+const payPaltext = $('#paypal');
+const bitCointext = $('#bitcoin');
 
 
 
@@ -66,7 +71,7 @@ designOptions.on('change', function (){
  }
 });
 
-
+// make activity checkboxes interactive on clicks
 activityCheckbox.on('click', function () {
     const clicked = $(event.target);
     const clickedAttr = $(this).attr('name');
@@ -171,3 +176,18 @@ function createTotal () {
 };
 
 createTotal();
+
+//working on payment section
+
+paymentOptions.eq(1).attr('selected', true);
+paymentInfo.addClass('payment');
+$('.payment div').eq(4).attr('id', 'paypal');
+$('.payment div').eq(5).attr('id', 'bitcoin');
+
+paymentOptions.on('change', function () {
+    if (paymentOptions.val() === 'credit card') {
+        // $('#paypal').hide();
+        // $('#bitcoin').hide();
+
+    }
+});
