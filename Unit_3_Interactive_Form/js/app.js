@@ -11,7 +11,11 @@ let total = 0;
 refreshFocus = () => {
     $('#name').focus();
     $('#other-title').hide()
+    $('#color').val('select theme');
     //$('#colors-js-puns').hide()
+    // if(designOptions.val() ===  'Select Theme'){
+    //     $('#color').html('<option>Please select a T-shirt theme</option>');
+    // }
 };
 refreshFocus();
 
@@ -34,13 +38,23 @@ if (index <= 2) {
 }
 });
 
-// if(designOptions.val() === 'Select Theme'){
 
-// };
 
 //change color options based on design selection
+$('#color').prepend('<option>Please select a T-shirt theme</option>');
+$('#color').children().first().attr('value', 'select theme');
+$('#design').children().first().attr('value', 'select design');
+if(designOptions.val() ===  'select design'){
+    $('#color').hide();
+}
 designOptions.on('change', function (){
     $('#colors-js-puns').show()
+    $('#color').show();
+    if(designOptions.val() ===  'select design'){
+        $('#color').val('select theme');
+        $('.Love_JS_Colors').hide();
+        $('.JS_Pun_Colors').hide();
+    }
  if (designOptions.val() ===  'js puns'){
      $('#color').val('cornflowerblue');
      $('.Love_JS_Colors').hide();
