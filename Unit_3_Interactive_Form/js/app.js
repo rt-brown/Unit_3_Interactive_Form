@@ -9,6 +9,7 @@ const creditCardinfo = $('#credit-card');
 const paymentSelection = $('#payment');
 const payPaltext = $('#payment').next().next();
 const bitCointext = payPaltext.next();
+const submitButton = $('button');
 
 
 
@@ -198,3 +199,64 @@ paymentSelection.on('change', function () {
         bitCointext.show();
     }
 });
+
+//form validation on submit handler
+submitButton.on('click', function(){
+    let validName = function () {
+        const regex = /^[a-z ,.'-]+$/i;
+        const nameInput = $('#name').val();
+        return(regex.test(nameInput));
+      }
+console.log(validName());
+
+    let validEmail = function (){
+        const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        const emailInput = $('#mail').val();
+        return(regex.test(emailInput));
+    }
+console.log(validEmail());
+
+    let validActivities = function () {
+        if ($('input:checked').length >= 1) {
+            return true
+        } else {
+            return false
+        }
+    }
+console.log(validActivities());    
+    
+    let validCreditnumber = function () {
+        if (paymentSelection.val() != 'credit card') {
+            return true
+        } else if (paymentSelection.val() === 'credit card') {
+            const regex = /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/
+            const cardNumberinput = $('#cc-num').val()
+            return(regex.test(cardNumberinput));
+        } 
+    }
+console.log(validCreditnumber());
+
+    let validZip = function () {
+        if (paymentSelection.val() != 'credit card') {
+            return true
+        } else if (paymentSelection.val() === 'credit card') {
+            const regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/
+            const zipInput = $('#zip').val()
+            return(regex.test(zipInput));
+        } 
+    }
+console.log(validZip());
+
+    let validCvv = function () {
+        if (paymentSelection.val() != 'credit card') {
+            return true
+        } else if (paymentSelection.val() === 'credit card') {
+            const regex = /^[0-9]{3,4}$/
+            const cvvInput = $('#cvv').val()
+            return(regex.test(cvvInput));
+        } 
+    }
+console.log(validCvv());
+});
+
+
