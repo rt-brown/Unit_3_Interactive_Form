@@ -257,6 +257,23 @@ console.log(validZip());
         } 
     }
 console.log(validCvv());
+
+    let checkInputs = function () {
+        let activites = validActivities();
+        let cardNumber = validCreditnumber();
+        let cvv = validCvv();
+        let email = validEmail();
+        let name = validName();
+        let zip = validZip();
+        if (activites && cardNumber && cvv && email && name && zip) {
+            alert('Thank you for your submission!');
+        } else {
+            event.preventDefault();
+            alert('Please input the required fields')
+        }
+        console.log((activites && cardNumber && cvv && email && name && zip));
+    }
+    checkInputs();
 });
 
 
