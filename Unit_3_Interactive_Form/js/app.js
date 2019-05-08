@@ -207,14 +207,12 @@ submitButton.on('click', function(){
         const nameInput = $('#name').val();
         return(regex.test(nameInput));
       }
-console.log(validName());
 
     let validEmail = function (){
         const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
         const emailInput = $('#mail').val();
         return(regex.test(emailInput));
     }
-console.log(validEmail());
 
     let validActivities = function () {
         if ($('input:checked').length >= 1) {
@@ -223,7 +221,6 @@ console.log(validEmail());
             return false
         }
     }
-console.log(validActivities());    
     
     let validCreditnumber = function () {
         if (paymentSelection.val() != 'credit card') {
@@ -234,7 +231,6 @@ console.log(validActivities());
             return(regex.test(cardNumberinput));
         } 
     }
-console.log(validCreditnumber());
 
     let validZip = function () {
         if (paymentSelection.val() != 'credit card') {
@@ -245,7 +241,6 @@ console.log(validCreditnumber());
             return(regex.test(zipInput));
         } 
     }
-console.log(validZip());
 
     let validCvv = function () {
         if (paymentSelection.val() != 'credit card') {
@@ -256,22 +251,55 @@ console.log(validZip());
             return(regex.test(cvvInput));
         } 
     }
-console.log(validCvv());
 
     let checkInputs = function () {
-        let activites = validActivities();
-        let cardNumber = validCreditnumber();
-        let cvv = validCvv();
-        let email = validEmail();
-        let name = validName();
-        let zip = validZip();
-        if (activites && cardNumber && cvv && email && name && zip) {
-            alert('Thank you for your submission!');
-        } else {
-            event.preventDefault();
-            alert('Please input the required fields')
+        const outputs = [
+            validName(),
+            validEmail(),
+            validActivities(),
+            validCreditnumber(),
+            validZip(),
+            validCvv()
+        ];
+        const alerts = [
+            'Please update your name',
+            'Please input a valid email address',
+            'Please select at least 1 activity',
+            'Please input a valid credit card number',
+            'Please input a valid zip code',
+            'Please input a valid CVV number'
+        ];
+        function removeAlert() {
+            $('.alerts').remove();
         }
-        console.log((activites && cardNumber && cvv && email && name && zip));
+        removeAlert();
+        let testArrayvalue = outputs.every(testArray);
+        function testArray(currentElement) {
+             if(currentElement === true){
+                 return true
+             }else{
+                 return false
+             };
+        }
+
+        if(testArrayvalue === true){
+            removeAlert();
+            alert('Thanks for your submission!')
+        }else {
+        for (let index = 0; index < outputs.length; index++) {
+            if (outputs[index] === false) {
+                event.preventDefault();
+                createAlert(alerts[index]);
+            } 
+        }
+        }
+        
+        function createAlert (alert) {
+            let alerts = $('button').after('<p>' + alert + '</p>');
+            alerts.next().css({'color': 'maroon'}).addClass('alerts');
+        }
+       
+       
     }
     checkInputs();
 });
