@@ -284,7 +284,7 @@ submitButton.on('click', function(){
 
         if(testArrayvalue === true){
             removeAlert();
-            alert('Thanks for your submission!')
+            alert('Thanks for your submission!').delay(5000);
         }else {
         for (let index = 0; index < outputs.length; index++) {
             if (outputs[index] === false) {
