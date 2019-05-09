@@ -13,7 +13,7 @@ const submitButton = $('button');
 
 
 
-//set focus on page load
+//methods for initial load
 refreshFocus = () => {
     $('#name').focus();
     $('#other-title').prop('placeholder', 'Your Job Role')
@@ -174,7 +174,7 @@ activityCheckbox.on('click', function () {
     
 })
 
-
+//create total cost element
 function createTotal () {
     const parentActivities = $('.activities');
     parentActivities.append('<label>Total:</label>')
@@ -184,13 +184,13 @@ function createTotal () {
 
 createTotal();
 
-//working on payment section
-
+//initial payment methods
 paymentOptions.eq(1).attr('selected', true);
 paymentOptions.eq(0).hide();
 payPaltext.hide();
 bitCointext.hide();
 
+//conditionality on payment selection 
 paymentSelection.on('change', function () {
     if (paymentSelection.val() === 'credit card') {
         payPaltext.hide();
@@ -209,6 +209,7 @@ paymentSelection.on('change', function () {
 
 //form validation on submit handler
 submitButton.on('click', function(){
+    //functions to return boolean against regex
     let validName = function () {
         const regex = /^[a-z ,.'-]+$/i;
         const nameInput = $('#name').val();
@@ -258,8 +259,9 @@ submitButton.on('click', function(){
             return(regex.test(cvvInput));
         } 
     }
-
+    //function to check inputs
     let checkInputs = function () {
+        //store booleans in array
         const outputs = [
             validName(),
             validEmail(),
@@ -268,6 +270,7 @@ submitButton.on('click', function(){
             validZip(),
             validCvv()
         ];
+        //store properties of alerts in array
         const alerts = [
             {
                 inputType: 'input',
@@ -302,12 +305,18 @@ submitButton.on('click', function(){
             
         ];
         let alertSelector = alert.selector;
+        
+        //function to remove alerts if checkInput == true
         function removeAlert(alert) {
+            let inputType = alert.inputType;
             let alertSelector = alert.selector;
             alertSelector.removeAttr('placeholder').removeAttr('style');
-            $(".activities p").remove();
+            if (inputType === 'checkbox'){
+                $(".activities p").remove();
+            }
+            //
         }
-        //removeAlert();
+        //test to see if all ouput array elements are true. in case initial form submissions doesn't have errors no need to check for false values
         let testArrayvalue = outputs.every(testArray);
         function testArray(currentElement) {
              if(currentElement === true){
@@ -316,9 +325,8 @@ submitButton.on('click', function(){
                  return false
              };
         }
-        console.log(testArray())
+        //start checking inputs. loops through arrays to find which ones are true and which are false
         if(testArrayvalue === true){
-            //removeAlert();
             alert('Thanks for your submission!');
             
         }else {
@@ -333,7 +341,7 @@ submitButton.on('click', function(){
             }
         }
         }
-        
+        //function that takes on the alert index as a param to build the alert messages depending on which is false. Includes the selector to add messages to proper element that is false
         function createAlert (alert) {
             let inputType = alert.inputType;
             let alertSelector = alert.selector;
@@ -345,7 +353,6 @@ submitButton.on('click', function(){
             }else{
             let alerts = alertSelector.attr("placeholder", alert.message);
             }
-            //alerts.next().css({'color': 'maroon'}).addClass('alerts');
             alertSelector.css({"border-color": "red"});
             
         }
