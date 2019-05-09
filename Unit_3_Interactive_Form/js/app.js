@@ -16,6 +16,7 @@ const submitButton = $('button');
 //set focus on page load
 refreshFocus = () => {
     $('#name').focus();
+    $('#other-title').prop('placeholder', 'Your Job Role')
     $('#other-title').hide()
     $('#color').val('select theme');
     //$('#colors-js-puns').hide()
@@ -29,6 +30,7 @@ refreshFocus();
 //make other text box conditional
 jobRole.on('change', function (){
     if(jobRole.val() === 'other'){
+        
         $('#other-title').show();
         }else {
         $('#other-title').hide()
@@ -48,7 +50,8 @@ if (index <= 2) {
 
 //change color options based on design selection
 $('#color').prepend('<option>Please select a T-shirt theme</option>');
-$('#color').children().first().attr('value', 'select theme');
+$('#color').children().first().attr('value', 'select_theme').addClass('select_theme');
+
 $('#design').children().first().attr('value', 'select design');
 if(designOptions.val() ===  'select design'){
     $('#color').hide();
@@ -57,17 +60,20 @@ designOptions.on('change', function (){
     $('#colors-js-puns').show()
     $('#color').show();
     if(designOptions.val() ===  'select design'){
-        $('#color').val('select theme');
+       
+        $('#color').val('select_theme');
         $('.Love_JS_Colors').hide();
         $('.JS_Pun_Colors').hide();
     }
  if (designOptions.val() ===  'js puns'){
      $('#color').val('cornflowerblue');
      $('.Love_JS_Colors').hide();
+     $('.select_theme').hide();
      $('.JS_Pun_Colors').show();
  } else if(designOptions.val() === 'heart js'){
     $('#color').val('tomato'); 
     $('.JS_Pun_Colors').hide();
+    $('.select_theme').hide();
     $('.Love_JS_Colors').show();
  }
 });
@@ -181,6 +187,7 @@ createTotal();
 //working on payment section
 
 paymentOptions.eq(1).attr('selected', true);
+paymentOptions.eq(0).hide();
 payPaltext.hide();
 bitCointext.hide();
 
@@ -262,17 +269,45 @@ submitButton.on('click', function(){
             validCvv()
         ];
         const alerts = [
-            'Please update your name',
-            'Please input a valid email address',
-            'Please select at least 1 activity',
-            'Please input a valid credit card number',
-            'Please input a valid zip code',
-            'Please input a valid CVV number'
+            {
+                inputType: 'input',
+                selector: $('#name'),
+                message:'Please update your name'
+            },
+            {
+                inputType: 'input',
+                selector: $('#mail'),
+                message: 'Please input a valid email address'
+            },
+            {
+                inputType: 'checkbox',
+                selector: $('.activities'),
+                message: 'Please select at least 1 activity'
+            },
+            {
+                inputType: 'input',
+                selector: $('#cc-num'),
+                message: 'Invalid credit card number'
+            },
+            {
+                inputType: 'input',
+                selector: $('#zip'),
+                message:'Invalid zip code'
+            },
+            {
+                inputType: 'input',
+                selector: $('#cvv'),
+                message: 'Invalid CVV'
+            },
+            
         ];
-        function removeAlert() {
-            $('.alerts').remove();
+        let alertSelector = alert.selector;
+        function removeAlert(alert) {
+            let alertSelector = alert.selector;
+            alertSelector.removeAttr('placeholder').removeAttr('style');
+            $(".activities p").remove();
         }
-        removeAlert();
+        //removeAlert();
         let testArrayvalue = outputs.every(testArray);
         function testArray(currentElement) {
              if(currentElement === true){
@@ -281,24 +316,40 @@ submitButton.on('click', function(){
                  return false
              };
         }
-
+        console.log(testArray())
         if(testArrayvalue === true){
-            removeAlert();
-            alert('Thanks for your submission!').delay(5000);
+            //removeAlert();
+            alert('Thanks for your submission!');
+            
         }else {
         for (let index = 0; index < outputs.length; index++) {
             if (outputs[index] === false) {
                 event.preventDefault();
                 createAlert(alerts[index]);
-            } 
+                
+            } else if(outputs[index]=== true){
+                removeAlert(alerts[index]);
+                
+            }
         }
         }
         
         function createAlert (alert) {
-            let alerts = $('button').after('<p>' + alert + '</p>');
-            alerts.next().css({'color': 'maroon'}).addClass('alerts');
+            let inputType = alert.inputType;
+            let alertSelector = alert.selector;
+            if (inputType === 'checkbox'){
+                $(".activities p").remove();
+                let alerts = alertSelector.prepend('<p>' + alert.message + '</p>');
+                $('.activities').children().eq(0).css({"color": "#e60000"});
+                
+            }else{
+            let alerts = alertSelector.attr("placeholder", alert.message);
+            }
+            //alerts.next().css({'color': 'maroon'}).addClass('alerts');
+            alertSelector.css({"border-color": "red"});
+            
         }
-       
+        
        
     }
     checkInputs();
